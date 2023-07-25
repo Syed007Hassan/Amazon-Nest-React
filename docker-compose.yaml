@@ -5,9 +5,9 @@ services:
     image: mongo:latest
     container_name: mongo
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin-hassan
-      - MONGO_INITDB_ROOT_PASSWORD=2EwVKp55kgpe2C2e
-      - MONGO_INITDB_DATABASE=amazone
-      - MONGO_URI=mongodb+srv://admin-hassan:2EwVKp55kgpe2C2e@cluster0.yipmq.mongodb.net/amazon
+      - MONGO_INITDB_ROOT_USERNAME=process.env.MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=process.env.MONGO_PASSWORD
+      - MONGO_INITDB_DATABASE=process.env.MONGO_DATABASE
+      - MONGO_URI=process.env.MONGO_URI
     ports:
       - 27017:27017
