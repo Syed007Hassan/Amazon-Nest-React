@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin-hassan
+      - MONGO_INITDB_ROOT_PASSWORD=2EwVKp55kgpe2C2e
+      - MONGO_INITDB_DATABASE=amazone
+      - MONGO_URI=mongodb+srv://admin-hassan:2EwVKp55kgpe2C2e@cluster0.yipmq.mongodb.net/amazon
+    ports:
+      - 27017:27017
