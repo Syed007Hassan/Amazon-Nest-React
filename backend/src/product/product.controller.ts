@@ -48,8 +48,16 @@ export class ProductController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {
+    try {
+      const product = await this.productService.update(id, updateProductDto);
+      return { success: true, data: product };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   }
 
   @Delete(':id')

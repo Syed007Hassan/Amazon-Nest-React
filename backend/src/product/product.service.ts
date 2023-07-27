@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -26,8 +27,12 @@ export class ProductService {
     return product;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  update(id: string, updateProductDto: UpdateProductDto) {
+    const updatedProduct = this.productModel
+      .findByIdAndUpdate(id, updateProductDto)
+      .exec();
+    const newUpdatedProduct = this.productModel.findById(id).exec();
+    return newUpdatedProduct;
   }
 
   remove(id: number) {
