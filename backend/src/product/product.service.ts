@@ -21,8 +21,9 @@ export class ProductService {
     return allProducts;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string) {
+    const product = await this.productModel.findById(id).exec();
+    return product;
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {

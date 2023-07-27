@@ -38,8 +38,13 @@ export class ProductController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    try {
+      const product = await this.productService.findOne(id);
+      return { success: true, data: product };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   }
 
   @Patch(':id')
