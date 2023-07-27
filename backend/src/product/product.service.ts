@@ -11,8 +11,9 @@ export class ProductService {
     @InjectModel('Product') private readonly productModel: Model<Product>,
   ) {}
 
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  async create(createProductDto: CreateProductDto) {
+    const newProduct = await this.productModel.create(createProductDto);
+    return newProduct.save();
   }
 
   findAll() {
