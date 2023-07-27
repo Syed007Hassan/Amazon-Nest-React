@@ -16,8 +16,9 @@ export class ProductService {
     return newProduct.save();
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findAll() {
+    const allProducts = await this.productModel.find().exec();
+    return allProducts;
   }
 
   findOne(id: number) {

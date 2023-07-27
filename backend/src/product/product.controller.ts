@@ -28,8 +28,13 @@ export class ProductController {
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  async findAll() {
+    try {
+      const allProducts = await this.productService.findAll();
+      return { success: true, data: allProducts };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   }
 
   @Get(':id')
