@@ -3,10 +3,14 @@ import { ExistingUserDto } from 'src/user/dto/existing-user.dto';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from '../user/dto/login-user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
   async registerUser(user: ExistingUserDto) {
     const findUser = await this.userService.findOneByEmail(user.email);
@@ -23,7 +27,9 @@ export class AuthService {
       loginUserDto.password,
     );
 
-    return user;
+    const payload = { email: user.email, name: user.name };
+    const jwt = await this.jwtService.signAsync(payload);
+    return { jwt };
   }
 
   async doesPasswordMatch(password: string, hashedPassword: string) {
