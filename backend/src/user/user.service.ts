@@ -10,12 +10,6 @@ export class UserService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const existingUser = await this.userModel.findOne({
-      email: createUserDto.email,
-    });
-    if (existingUser) {
-      throw new Error('User already exists');
-    }
     const saltRounds = 10;
     const hash = bcrypt.hashSync(createUserDto.password, saltRounds);
     const newUser = new this.userModel({
@@ -31,6 +25,11 @@ export class UserService {
       throw new Error('No users found');
     }
     return users;
+  }
+
+  async findOneByEmail(email: string) {
+    const user = await this.userModel.findOne({ email }).exec();
+    return user;
   }
 
   findOne(id: number) {

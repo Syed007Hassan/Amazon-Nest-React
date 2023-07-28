@@ -42,6 +42,16 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
+  @Get('findOneByEmail/:email')
+  async findOneByEmail(@Param('email') email: string) {
+    try {
+      const user = await this.userService.findOneByEmail(email);
+      return { success: true, data: user };
+    } catch (err) {
+      return { success: false, message: err.message };
+    }
+  }
+
   @Patch('update/:id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
