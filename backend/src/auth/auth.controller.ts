@@ -12,6 +12,7 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { ExistingUserDto } from 'src/user/dto/existing-user.dto';
+import { LoginUserDto } from 'src/user/dto/login-user.dto';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
@@ -27,10 +28,15 @@ export class AuthController {
     }
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.authService.findAll();
-  // }
+  @Post('login')
+  async login(@Body() loginUserDto: LoginUserDto) {
+    try {
+      const user = await this.authService.login(loginUserDto);
+      return { success: true, data: user };
+    } catch (err) {
+      return { success: false, message: err.message };
+    }
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {
