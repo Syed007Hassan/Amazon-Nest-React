@@ -16,6 +16,7 @@ export class UserService {
       ...createUserDto,
       password: hash,
     });
+
     return newUser.save();
   }
 

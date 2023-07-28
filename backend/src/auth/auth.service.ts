@@ -12,6 +12,6 @@ export class AuthService {
       throw new Error('User already exists');
     }
     const newUser = await this.userService.create(user);
-    return newUser;
+    return { name: newUser.name, email: newUser.email };
   }
 }
