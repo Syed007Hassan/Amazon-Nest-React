@@ -4,17 +4,33 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './entities/user.entity';
-
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const existingUser = await this.userModel.findOne({
+      email: createUserDto.email,
+    });
+    if (existingUser) {
+      throw new Error('User already exists');
+    }
+    const saltRounds = 10;
+    const hash = bcrypt.hashSync(createUserDto.password, saltRounds);
+    const newUser = new this.userModel({
+      ...createUserDto,
+      password: hash,
+    });
+    return newUser.save();
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    const users = await this.userModel.find().exec();
+    if (!users) {
+      throw new Error('No users found');
+    }
+    return users;
   }
 
   findOne(id: number) {
