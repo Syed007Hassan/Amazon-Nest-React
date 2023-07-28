@@ -19,20 +19,29 @@ export class ProductService {
 
   async findAll() {
     const allProducts = await this.productModel.find().exec();
+    if (!allProducts) {
+      throw new Error('No products found');
+    }
     return allProducts;
   }
 
   async findOne(id: string) {
     const product = await this.productModel.findById(id).exec();
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
     return product;
   }
 
-  update(id: string, updateProductDto: UpdateProductDto) {
-    const updatedProduct = this.productModel
-      .findByIdAndUpdate(id, updateProductDto)
-      .exec();
-    const newUpdatedProduct = this.productModel.findById(id).exec();
-    return newUpdatedProduct;
+  async update(id: string, updateProductDto: UpdateProductDto) {
+    const existingProduct = await this.productModel.findById(id).exec();
+    if (!existingProduct) {
+      throw new Error('Product not found');
+    }
+    const updatedProduct = Object.assign(existingProduct, updateProductDto);
+    await updatedProduct.save();
+    return updatedProduct;
   }
 
   remove(id: number) {
