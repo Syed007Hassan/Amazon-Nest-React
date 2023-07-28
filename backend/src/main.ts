@@ -9,6 +9,9 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
+  app.setGlobalPrefix('api');
+
   // Log each request
   app.use((req, res, next) => {
     logger.log(`Request ${req.method} ${req.originalUrl}`);
