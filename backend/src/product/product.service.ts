@@ -44,7 +44,11 @@ export class ProductService {
     return updatedProduct;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    const product = await this.productModel.findById(id).exec();
+    if (!product) {
+      throw new Error('Product not found');
+    }
+    return product.deleteOne();
   }
 }
