@@ -6,11 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from '../auth/guard/auth.guard';
 
 @ApiTags('Products')
 @Controller('product')
@@ -37,6 +39,7 @@ export class ProductController {
     }
   }
 
+  @UseGuards(JwtGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {

@@ -6,6 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
+  HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../user/dto/create-user.dto';
@@ -13,6 +16,7 @@ import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { ExistingUserDto } from 'src/user/dto/existing-user.dto';
 import { LoginUserDto } from 'src/user/dto/login-user.dto';
+import { JwtGuard } from './guard/auth.guard';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
@@ -29,6 +33,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @HttpCode(HttpStatus.OK)
   async login(@Body() loginUserDto: LoginUserDto) {
     try {
       const user = await this.authService.login(loginUserDto);
@@ -38,18 +43,9 @@ export class AuthController {
     }
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.authService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateAuthDto: UpdateUserDto) {
-  //   return this.authService.update(+id, updateAuthDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.authService.remove(+id);
-  // }
+  @UseGuards(JwtGuard)
+  @Get('validateToken')
+  testRoute() {
+    return { success: true };
+  }
 }
