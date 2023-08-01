@@ -5,7 +5,13 @@ import { Grid } from "@mui/material";
 const AuthLayout = ({ children }: { children: ReactNode }) => {
   return (
     <Grid
-      sx={{ p: 2 }}
+      sx={{
+        p: 10,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
       container
       direction="column"
       justifyContent="flex-start"

@@ -20,11 +20,12 @@ const RegistrationForm: FC = () => {
           </Typography>
 
           <TextField
+            type="text"
             sx={{
               borderColor: "black",
               fontWeight: 500,
               marginTop: 2,
-              marginBottom: 2,
+              marginBottom: 1,
               color: "black",
             }}
             id="name"
@@ -32,16 +33,46 @@ const RegistrationForm: FC = () => {
             variant="outlined"
           />
           <TextField
+            type="email"
             sx={{
               borderColor: "black",
               fontWeight: 500,
               marginTop: 2,
-              marginBottom: 2,
+              marginBottom: 1,
               color: "black",
             }}
             id="email"
             label="Email"
             variant="outlined"
+          />
+          <TextField
+            type="password"
+            sx={{
+              borderColor: "black",
+              fontWeight: 500,
+              marginTop: 2,
+              marginBottom: 1,
+              color: "black",
+            }}
+            id="email"
+            label="Password"
+            variant="outlined"
+            placeholder="At least 8 characters"
+          />
+          <TextField
+            type="password"
+            sx={{
+              borderColor: "black",
+              fontWeight: 500,
+              marginTop: 2,
+              marginBottom: 1,
+              color: "black",
+            }}
+            id="email"
+            label="Re-enter Password"
+            variant="outlined"
+            placeholder="At least 8 characters"
+            size="small"
           />
         </Grid>
       </form>
