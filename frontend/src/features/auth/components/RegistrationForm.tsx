@@ -25,11 +25,19 @@ const RegistrationForm: FC = () => {
         borderColor: "#cccccc",
         width: "350px",
         marginTop: 2,
+        backgroundColor: "#ffffff",
+        borderRadius: "4px",
+        marginBottom: "16px",
       }}
     >
       <form onSubmit={onSubmitHandler}>
         <Grid container direction={"column"} justifyContent={"flex-start"}>
-          <Typography variant="h5" component={"h4"} color="initial">
+          <Typography
+            variant="h5"
+            component={"h4"}
+            color="initial"
+            sx={{ fontFamily: "Amazon Ember, sans-serif" }}
+          >
             Create an account
           </Typography>
 
@@ -91,14 +99,19 @@ const RegistrationForm: FC = () => {
           <Button
             variant="contained"
             type="submit"
-            style={{
+            sx={{
               marginTop: "16px",
               height: "31px",
               backgroundColor: "#f0c14b",
-              color: "black",
+              color: "#111111",
               fontWeight: 700,
               borderColor: "#a88734 #9c7e31 #846a29",
               textTransform: "none",
+              fontSize: "14px",
+              borderRadius: "4px",
+              "&:hover": {
+                backgroundColor: "#e3a600",
+              },
             }}
           >
             Register
