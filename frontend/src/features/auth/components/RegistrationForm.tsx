@@ -5,9 +5,11 @@ import {
   Typography,
   TextField,
   Button,
+  Divider,
 } from "@mui/material";
 import React from "react";
 import { FC, FormEvent } from "react";
+import { Link } from "react-router-dom";
 
 const RegistrationForm: FC = () => {
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
@@ -103,6 +105,40 @@ const RegistrationForm: FC = () => {
           </Button>
         </Grid>
       </form>
+      <div style={{ marginTop: "8px" }}>
+        <small>
+          By creating an account, you agree to Amazon's{" "}
+          <a href="#" style={{ textDecoration: "none" }}>
+            {""}Conditions of use
+          </a>{" "}
+          and {""}
+          <a href="#" style={{ textDecoration: "none" }}>
+            privacy policy{" "}
+          </a>
+        </small>
+      </div>
+
+      <Divider
+        sx={{
+          marginTop: "36px",
+          marginBottom: "16px",
+        }}
+      />
+      <small>
+        Already have an account?{" "}
+        <Link to="/signin" style={{ textDecoration: "none", color: "#0000ee" }}>
+          Sign in
+        </Link>
+      </small>
+      <div>
+        <small>
+          Buying for work{" "}
+          <a href="#" style={{ textDecoration: "none" }}>
+            {" "}
+            Create a free business account
+          </a>{" "}
+        </small>
+      </div>
     </Box>
   );
 };
