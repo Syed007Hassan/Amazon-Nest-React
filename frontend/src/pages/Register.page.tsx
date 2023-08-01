@@ -5,7 +5,7 @@ import RegistrationForm from "../features/auth/components/RegistrationForm";
 export const RegisterPage = () => {
   return (
     <AuthLayout>
-      <RegistrationForm></RegistrationForm>
+      <RegistrationForm/>
     </AuthLayout>
   );
 };
