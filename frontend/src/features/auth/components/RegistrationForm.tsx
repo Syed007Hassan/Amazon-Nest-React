@@ -129,10 +129,8 @@ const RegistrationForm: FC = () => {
           </a>
         </small>
       </div>
-      <div style={{ marginTop: "16px" }}>
-        <Divider />
-        <small style={{ color: "#767676" }}>New To Amazon?</small>
-        <Divider />
+      <Divider style={{ marginTop: "13px" }} />
+      <div style={{ marginTop: "13px" }}>
         <small>
           Already have an account?{" "}
           <Link
@@ -142,6 +140,7 @@ const RegistrationForm: FC = () => {
             Sign in
           </Link>
         </small>
+
         <div>
           <small>
             Buying for work{" "}
