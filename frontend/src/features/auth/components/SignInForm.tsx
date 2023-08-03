@@ -11,7 +11,7 @@ import React from "react";
 import { FC, FormEvent } from "react";
 import { Link } from "react-router-dom";
 
-const RegistrationForm: FC = () => {
+const SignInForm: FC = () => {
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Submitted");
@@ -38,22 +38,8 @@ const RegistrationForm: FC = () => {
             color="initial"
             sx={{ fontFamily: "Amazon Ember, sans-serif" }}
           >
-            Create an account
+            Sign In
           </Typography>
-
-          <TextField
-            type="text"
-            sx={{
-              borderColor: "black",
-              fontWeight: 500,
-              marginTop: 2,
-              marginBottom: 1,
-              color: "black",
-            }}
-            id="name"
-            label="Name"
-            variant="outlined"
-          />
           <TextField
             type="email"
             sx={{
@@ -81,20 +67,7 @@ const RegistrationForm: FC = () => {
             variant="outlined"
             placeholder="At least 8 characters"
           />
-          <TextField
-            type="password"
-            sx={{
-              borderColor: "black",
-              fontWeight: 500,
-              marginTop: 2,
-              marginBottom: 1,
-              color: "black",
-            }}
-            id="email"
-            label="Re-enter Password"
-            variant="outlined"
-            placeholder="At least 8 characters"
-          />
+
           <Button
             variant="contained"
             type="submit"
@@ -156,4 +129,4 @@ const RegistrationForm: FC = () => {
   );
 };
 
-export default RegistrationForm;
+export default SignInForm;
