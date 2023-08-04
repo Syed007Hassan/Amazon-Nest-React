@@ -10,8 +10,19 @@ import {
 import React from "react";
 import { FC, FormEvent } from "react";
 import { Link } from "react-router-dom";
+import useInput from "../../../hooks/use-input";
+import { validateNameLength } from "../../../shared/utils/validation/length";
 
 const RegistrationForm: FC = () => {
+  const {
+    value,
+    isValid,
+    hasError,
+    valueChangeHandler,
+    inputBlurHandler,
+    reset,
+  } = useInput(validateNameLength);
+
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Submitted");
