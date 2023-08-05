@@ -6,10 +6,10 @@ export const validateLength = (
 ): boolean => {
   const textLength = text.trim().length;
 
-  if (options?.min && textLength < options.min) {
+  if (options && options.min && textLength < options.min) {
     return false;
   }
-  if (options?.max && textLength > options.max) {
+  if (options && options.max && textLength > options.max) {
     return false;
   }
 

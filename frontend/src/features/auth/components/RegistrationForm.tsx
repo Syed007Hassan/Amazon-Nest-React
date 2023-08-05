@@ -11,7 +11,11 @@ import React from "react";
 import { FC, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import useInput from "../../../hooks/use-input";
-import { validateNameLength } from "../../../shared/utils/validation/length";
+import {
+  validateNameLength,
+  validatePasswordLength,
+} from "../../../shared/utils/validation/length";
+import { validateEmail } from "../../../shared/utils/validation/email";
 
 const RegistrationForm: FC = () => {
   const {
@@ -22,9 +26,36 @@ const RegistrationForm: FC = () => {
     reset: nameClearHandler,
   } = useInput(validateNameLength);
 
+  const {
+    value: email,
+    hasError: emailHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: emailClearHandler,
+  } = useInput(validateEmail);
+
+  const {
+    value: password,
+    hasError: passwordHasError,
+    valueChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    reset: passwordClearHandler,
+  } = useInput(validatePasswordLength);
+
+  const {
+    value: confirmPassword,
+    hasError: confirmHasError,
+    valueChangeHandler: confirmPasswordChangeHandler,
+    inputBlurHandler: confirmPasswordBlurHandler,
+    reset: confirmPasswordClearHandler,
+  } = useInput(validatePasswordLength);
+
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Submitted");
+    if (password !== confirmPassword) {
+      alert("Password does not match");
+      return;
+    }
   };
 
   return (
@@ -70,6 +101,11 @@ const RegistrationForm: FC = () => {
             variant="outlined"
           />
           <TextField
+            value={email}
+            onChange={emailChangeHandler}
+            onBlur={emailBlurHandler}
+            error={emailHasError}
+            helperText={emailHasError ? "Enter a valid email" : null}
             type="email"
             sx={{
               borderColor: "black",
@@ -83,6 +119,11 @@ const RegistrationForm: FC = () => {
             variant="outlined"
           />
           <TextField
+            value={password}
+            onChange={passwordChangeHandler}
+            onBlur={passwordBlurHandler}
+            error={passwordHasError}
+            helperText={passwordHasError ? "Enter a valid password" : null}
             type="password"
             sx={{
               borderColor: "black",
@@ -97,6 +138,11 @@ const RegistrationForm: FC = () => {
             placeholder="At least 8 characters"
           />
           <TextField
+            value={confirmPassword}
+            onChange={confirmPasswordChangeHandler}
+            onBlur={confirmPasswordBlurHandler}
+            error={confirmHasError}
+            helperText={confirmHasError ? "Enter a valid password" : null}
             type="password"
             sx={{
               borderColor: "black",
