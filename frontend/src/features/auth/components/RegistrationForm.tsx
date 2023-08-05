@@ -7,8 +7,7 @@ import {
   Button,
   Divider,
 } from "@mui/material";
-import React from "react";
-import { FC, FormEvent } from "react";
+import React, { FC, FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import useInput from "../../../hooks/use-input";
 import {
@@ -16,8 +15,11 @@ import {
   validatePasswordLength,
 } from "../../../shared/utils/validation/length";
 import { validateEmail } from "../../../shared/utils/validation/email";
+import { NewUser } from "./models/Newuser";
 
 const RegistrationForm: FC = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const {
     value: name,
     hasError: nameHasError,
@@ -50,12 +52,41 @@ const RegistrationForm: FC = () => {
     reset: confirmPasswordClearHandler,
   } = useInput(validatePasswordLength);
 
+  const clearForm = () => {
+    nameClearHandler();
+    emailClearHandler();
+    passwordClearHandler();
+    confirmPasswordClearHandler();
+    setIsSubmitted(false); // reset form submission status
+  };
+
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password !== confirmPassword) {
       alert("Password does not match");
       return;
     }
+
+    if (nameHasError || emailHasError || passwordHasError || confirmHasError) {
+      setIsSubmitted(true); // set form submission status to true
+      return;
+    }
+
+    if (!name || !email || !password || !confirmPassword) {
+      alert("Please fill all the fields");
+      return;
+    }
+
+    console.log("submitting");
+
+    const user: NewUser = {
+      name,
+      email,
+      password,
+    };
+
+    console.log(JSON.stringify(user) + " is registered");
+    clearForm();
   };
 
   return (
@@ -86,8 +117,10 @@ const RegistrationForm: FC = () => {
             value={name}
             onChange={nameChangeHandler}
             onBlur={nameBlurHandler}
-            error={nameHasError}
-            helperText={nameHasError ? "Enter your name" : null}
+            error={nameHasError && isSubmitted} // conditionally render error state
+            helperText={
+              nameHasError && isSubmitted ? "Enter your name" : null // conditionally render helper text
+            }
             type="text"
             sx={{
               borderColor: "black",
@@ -104,8 +137,10 @@ const RegistrationForm: FC = () => {
             value={email}
             onChange={emailChangeHandler}
             onBlur={emailBlurHandler}
-            error={emailHasError}
-            helperText={emailHasError ? "Enter a valid email" : null}
+            error={emailHasError && isSubmitted} // conditionally render error state
+            helperText={
+              emailHasError && isSubmitted ? "Enter a valid email" : null // conditionally render helper text
+            }
             type="email"
             sx={{
               borderColor: "black",
@@ -122,8 +157,10 @@ const RegistrationForm: FC = () => {
             value={password}
             onChange={passwordChangeHandler}
             onBlur={passwordBlurHandler}
-            error={passwordHasError}
-            helperText={passwordHasError ? "Enter a valid password" : null}
+            error={passwordHasError && isSubmitted} // conditionally render error state
+            helperText={
+              passwordHasError && isSubmitted ? "Enter a valid password" : null // conditionally render helper text
+            }
             type="password"
             sx={{
               borderColor: "black",
@@ -141,8 +178,10 @@ const RegistrationForm: FC = () => {
             value={confirmPassword}
             onChange={confirmPasswordChangeHandler}
             onBlur={confirmPasswordBlurHandler}
-            error={confirmHasError}
-            helperText={confirmHasError ? "Enter a valid password" : null}
+            error={confirmHasError && isSubmitted} // conditionally render error state
+            helperText={
+              confirmHasError && isSubmitted ? "Enter a valid password" : null // conditionally render helper text
+            }
             type="password"
             sx={{
               borderColor: "black",

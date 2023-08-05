@@ -17,7 +17,7 @@ export const validateLength = (
 };
 
 export const validateNameLength = (name: string): boolean => {
-  return validateLength(name, { min: 2, max: 20 });
+  return validateLength(name, { min: 2, max: 30 });
 };
 
 export const validatePasswordLength = (password: string): boolean => {
