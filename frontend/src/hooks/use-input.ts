@@ -50,7 +50,6 @@ const useInput = (validateValue: (value: string) => boolean) => {
 
   return {
     value: inputState.text,
-    isValid,
     hasError,
     valueChangeHandler,
     inputBlurHandler,

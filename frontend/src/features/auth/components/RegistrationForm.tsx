@@ -15,12 +15,11 @@ import { validateNameLength } from "../../../shared/utils/validation/length";
 
 const RegistrationForm: FC = () => {
   const {
-    value,
-    isValid,
-    hasError,
-    valueChangeHandler,
-    inputBlurHandler,
-    reset,
+    value: name,
+    hasError: nameHasError,
+    valueChangeHandler: nameChangeHandler,
+    inputBlurHandler: nameBlurHandler,
+    reset: nameClearHandler,
   } = useInput(validateNameLength);
 
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
@@ -53,6 +52,11 @@ const RegistrationForm: FC = () => {
           </Typography>
 
           <TextField
+            value={name}
+            onChange={nameChangeHandler}
+            onBlur={nameBlurHandler}
+            error={nameHasError}
+            helperText={nameHasError ? "Enter your name" : null}
             type="text"
             sx={{
               borderColor: "black",
