@@ -15,7 +15,7 @@ import {
   validatePasswordLength,
 } from "../../../shared/utils/validation/length";
 import { validateEmail } from "../../../shared/utils/validation/email";
-import { NewUser } from "./models/Newuser";
+import { NewUser } from "../models/Newuser";
 
 const RegistrationForm: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);

@@ -1,6 +1,10 @@
 //all methods for authentication
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { DisplayUser } from "./models/DisplayUser.interface";
+import { Jwt } from "./models/Jwt";
+import { NewUser } from "./models/Newuser";
+import axios from "axios";
 
 // TODO: move higher
 interface AsyncState {
@@ -10,16 +14,25 @@ interface AsyncState {
 }
 
 interface AuthState extends AsyncState {
-  token: string;
-  userId: string;
-  isLoggedIn: boolean;
+  user?: DisplayUser | null;
+  jwt?: Jwt | null;
+  isAuthenticated: boolean;
 }
+
+const initialState: AuthState = {
+  user: null,
+  jwt: null,
+  isLoading: false,
+  isSuccess: false,
+  isError: false,
+  isAuthenticated: false,
+};
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    token: "",
-    userId: "",
-    isLoggedIn: false,
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase("");
   },
 });

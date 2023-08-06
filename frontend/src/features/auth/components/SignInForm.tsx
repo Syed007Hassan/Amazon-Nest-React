@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import useInput from "../../../hooks/use-input";
 import { validatePasswordLength } from "../../../shared/utils/validation/length";
 import { validateEmail } from "../../../shared/utils/validation/email";
-import { NewUser } from "./models/Newuser";
+import { NewUser } from "../models/Newuser";
 
 const SigninForm: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
