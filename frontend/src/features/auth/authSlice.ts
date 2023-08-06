@@ -5,6 +5,7 @@ import { DisplayUser } from "./models/DisplayUser.interface";
 import { Jwt } from "./models/Jwt";
 import { NewUser } from "./models/Newuser";
 import axios from "axios";
+import authService from "./services/auth.service";
 
 // TODO: move higher
 interface AsyncState {
@@ -28,11 +29,37 @@ const initialState: AuthState = {
   isAuthenticated: false,
 };
 
+export const register = createAsyncThunk(
+  "auth/register",
+  async (newUser: NewUser, thunkAPI) => {
+    try {
+      return await authService.register(newUser);
+    } catch (error) {
+      return thunkAPI.rejectWithValue("Unable to register user");
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase("");
+    builder
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+      });
   },
 });
+
+export default authSlice.reducer;

@@ -7,7 +7,7 @@ import axios from "axios";
 const register = async (newUser: NewUser): Promise<DisplayUser> => {
   try {
     const response = await axios.post(
-      "http://localhost:3000/auth/register",
+      `${process.env.BASE_API}/auth/register`,
       newUser
     );
     return response.data;
