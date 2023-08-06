@@ -1,3 +1,5 @@
+//global store for redux
+
 import { configureStore } from "@reduxjs/toolkit";
 import { type } from "os";
 import { useDispatch } from "react-redux";
