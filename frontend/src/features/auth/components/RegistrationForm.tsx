@@ -8,7 +8,7 @@ import {
   Divider,
 } from "@mui/material";
 import React, { FC, FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../../hooks/use-input";
 import {
   validateNameLength,
@@ -16,6 +16,11 @@ import {
 } from "../../../shared/utils/validation/length";
 import { validateEmail } from "../../../shared/utils/validation/email";
 import { NewUser } from "../models/Newuser";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import { useAppSelector } from "../../../hooks/redux/hooks";
+import { register } from "../authSlice";
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { RootState } from "../../../store";
 
 const RegistrationForm: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -60,6 +65,13 @@ const RegistrationForm: FC = () => {
     setIsSubmitted(false); // reset form submission status
   };
 
+  // dispatch will be used to dispatch actions to the store
+  const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch();
+
+  const { isLoading, isSuccess } = useAppSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password !== confirmPassword) {
@@ -79,13 +91,16 @@ const RegistrationForm: FC = () => {
 
     console.log("submitting");
 
-    const user: NewUser = {
+    const newUser: NewUser = {
       name,
       email,
       password,
     };
 
-    console.log(JSON.stringify(user) + " is registered");
+    console.log(JSON.stringify(newUser) + " is registered");
+
+    dispatch(register(newUser));
+
     clearForm();
   };
 
