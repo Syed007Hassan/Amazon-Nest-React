@@ -3,13 +3,11 @@
 import { DisplayUser } from "../models/DisplayUser.interface";
 import { NewUser } from "../models/Newuser";
 import axios from "axios";
+import { BASE_API } from "../../../config.json";
 
 const register = async (newUser: NewUser): Promise<DisplayUser> => {
   try {
-    const response = await axios.post(
-      `${process.env.BASE_API}/auth/register`,
-      newUser
-    );
+    const response = await axios.post(`${BASE_API}/auth/register`, newUser);
     return response.data;
   } catch (error) {
     console.log(error);

@@ -111,7 +111,15 @@ const RegistrationForm: FC = () => {
     dispatch(register(newUser));
   };
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading)
+    return (
+      <CircularProgress
+        sx={{
+          marginTop: "64px",
+        }}
+        color="primary"
+      />
+    );
 
   return (
     <Box
