@@ -6,6 +6,7 @@ import { Jwt } from "./models/Jwt";
 import { NewUser } from "./models/Newuser";
 import axios from "axios";
 import authService from "./services/auth.service";
+import { RootState } from "../../store";
 
 // TODO: move higher
 interface AsyncState {
@@ -69,3 +70,7 @@ export const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const selectedUser = (state: RootState) => {
+  return state.auth.user;
+};
+export const { reset } = authSlice.actions;

@@ -6,8 +6,9 @@ import {
   TextField,
   Button,
   Divider,
+  CircularProgress,
 } from "@mui/material";
-import React, { FC, FormEvent, useState } from "react";
+import React, { FC, FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../../hooks/use-input";
 import {
@@ -18,7 +19,7 @@ import { validateEmail } from "../../../shared/utils/validation/email";
 import { NewUser } from "../models/Newuser";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
 import { useAppSelector } from "../../../hooks/redux/hooks";
-import { register } from "../authSlice";
+import { register, reset } from "../authSlice";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "../../../store";
 
@@ -72,6 +73,14 @@ const RegistrationForm: FC = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(reset()); // reset the auth state
+      clearForm(); // clear the form
+      navigate("/signin"); // redirect to login page
+    }
+  }, [isSuccess, dispatch]);
+
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password !== confirmPassword) {
@@ -100,9 +109,9 @@ const RegistrationForm: FC = () => {
     console.log(JSON.stringify(newUser) + " is registered");
 
     dispatch(register(newUser));
-
-    clearForm();
   };
+
+  if (isLoading) return <CircularProgress />;
 
   return (
     <Box
