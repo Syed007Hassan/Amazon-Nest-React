@@ -1,4 +1,4 @@
-import { DisplayUser } from "./displayUser.interface";
+import { DisplayUser } from "./DisplayUser.interface";
 
 export interface DecodedJwt {
   user: DisplayUser;
