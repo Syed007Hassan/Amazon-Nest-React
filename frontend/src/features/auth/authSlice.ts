@@ -8,6 +8,14 @@ import axios from "axios";
 import authService from "./services/auth.service";
 import { RootState } from "../../store";
 
+const storedUser: string | null = localStorage.getItem("user");
+
+const user: DisplayUser | null = storedUser ? JSON.parse(storedUser) : null;
+
+const storedJwt: string | null = localStorage.getItem("jwt");
+
+const jwt: Jwt | null = storedJwt ? JSON.parse(storedJwt) : null;
+
 // TODO: move higher
 interface AsyncState {
   isLoading: boolean;
@@ -22,8 +30,8 @@ interface AuthState extends AsyncState {
 }
 
 const initialState: AuthState = {
-  user: null,
-  jwt: null,
+  user: user,
+  jwt: jwt,
   isLoading: false,
   isSuccess: false,
   isError: false,
