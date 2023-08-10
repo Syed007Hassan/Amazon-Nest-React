@@ -42,6 +42,17 @@ export class AuthController {
     }
   }
 
+  @Post('verify-jwt')
+  @HttpCode(HttpStatus.OK)
+  async verifyJwt(@Body() payload: { jwt: string }) {
+    try {
+      const user = await this.authService.verifyJwt(payload.jwt);
+      return { success: true, data: user };
+    } catch (err) {
+      return { success: false, message: err.message };
+    }
+  }
+
   @UseGuards(JwtGuard)
   @Get('validateToken')
   testRoute() {

@@ -50,4 +50,14 @@ export class AuthService {
     }
     return { name: user.name, email: user.email };
   }
+
+  async verifyJwt(jwt: string) {
+    const { exp } = await this.jwtService.verifyAsync(jwt);
+
+    if (exp < Date.now()) {
+      throw new Error('Token expired');
+    }
+
+    return { exp };
+  }
 }
