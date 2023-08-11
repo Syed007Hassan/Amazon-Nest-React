@@ -44,7 +44,7 @@ export const HomePage = () => {
       >
         Logout
       </button>
-      {user?.name}
+      {user?.name ? user.name : "hassan"}
     </div>
   );
 };
