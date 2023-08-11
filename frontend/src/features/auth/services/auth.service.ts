@@ -3,7 +3,7 @@
 import { DisplayUser } from "../models/DisplayUser.interface";
 import { NewUser } from "../models/Newuser";
 import axios from "axios";
-import { BASE_API } from "../../../config.json";
+import BASE_API from "../../../config.json";
 import { LoginUser } from "../models/LoginUser.interface";
 import { Jwt } from "../models/Jwt";
 import { DecodedJwt } from "../models/DecodedJwt.interface";
