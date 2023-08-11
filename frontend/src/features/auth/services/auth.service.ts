@@ -36,11 +36,36 @@ const login = async (loginUser: LoginUser): Promise<Jwt> => {
   return response.data.data.jwt;
 };
 
+const logout = async (): Promise<void> => {
+  try {
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const verifyJwt = async (jwt: string): Promise<boolean> => {
+  try {
+    const response = await axios.post(`${BASE_API}/auth/verify-jwt`, { jwt });
+    if (response) {
+      const jwtExpirationMs = response.data.data.exp * 1000;
+      return jwtExpirationMs > Date.now();
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 const authService = {
   register,
   login,
-  // logout,
-  // verifyJwt,
+  logout,
+  verifyJwt,
 };
 
 export default authService;
