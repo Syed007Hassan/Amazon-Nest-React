@@ -6,13 +6,20 @@ import {
   TextField,
   Button,
   Divider,
+  CircularProgress,
 } from "@mui/material";
-import React, { FC, FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { FC, FormEvent, useEffect, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useInput from "../../../hooks/use-input";
 import { validatePasswordLength } from "../../../shared/utils/validation/length";
 import { validateEmail } from "../../../shared/utils/validation/email";
 import { NewUser } from "../models/Newuser";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import { useAppSelector } from "../../../hooks/redux/hooks";
+import { login, reset } from "../authSlice";
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { RootState } from "../../../store";
+import { LoginUser } from "../models/LoginUser.interface";
 
 const SigninForm: FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -39,6 +46,32 @@ const SigninForm: FC = () => {
     setIsSubmitted(false); // reset form submission status
   };
 
+  // dispatch will be used to dispatch actions to the store
+  const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch();
+
+  const { isLoading, isSuccess, isAuthenticated } = useAppSelector(
+    (state) => state.auth
+  );
+
+  const navigate = useNavigate();
+
+  // reset the form and form submission status when the component unmounts
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(reset()); // reset the auth state
+      clearForm(); // clear the form
+    }
+  }, [isSuccess, dispatch]);
+
+  // redirect to home page if user is authenticated
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/"); // redirect to home page
+    }
+  }, [isAuthenticated, navigate]);
+
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -54,14 +87,23 @@ const SigninForm: FC = () => {
 
     console.log("submitting");
 
-    const user = {
+    const loginUser: LoginUser = {
       email,
       password,
     };
 
-    console.log(JSON.stringify(user) + " is signed in");
-    clearForm();
+    dispatch(login(loginUser));
   };
+
+  if (isLoading)
+    return (
+      <CircularProgress
+        sx={{
+          marginTop: "64px",
+        }}
+        color="primary"
+      />
+    );
 
   return (
     <Box
