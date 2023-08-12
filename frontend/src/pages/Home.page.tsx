@@ -26,7 +26,7 @@ export const HomePage = () => {
 
   const logoutHandler = () => {
     dispatch(logout()); // dispatch logout action
-    navigate("/login"); // redirect to login page
+    navigate("/signin"); // redirect to login page
   };
 
   return (
@@ -44,7 +44,7 @@ export const HomePage = () => {
       >
         Logout
       </button>
-      {user?.name ? user.name : "hassan"}
+      {user?.name ? user.name : "no user"}
     </div>
   );
 };

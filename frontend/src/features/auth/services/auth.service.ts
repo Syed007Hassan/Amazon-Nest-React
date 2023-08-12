@@ -3,10 +3,11 @@
 import { DisplayUser } from "../models/DisplayUser.interface";
 import { NewUser } from "../models/Newuser";
 import axios from "axios";
-import BASE_API from "../../../config.json";
+import { BASE_API } from "../../../config";
 import { LoginUser } from "../models/LoginUser.interface";
 import { Jwt } from "../models/Jwt";
 import { DecodedJwt } from "../models/DecodedJwt.interface";
+import jwt_decode from "jwt-decode";
 
 const register = async (newUser: NewUser): Promise<DisplayUser> => {
   try {
@@ -50,13 +51,14 @@ const verifyJwt = async (jwt: string): Promise<boolean> => {
   try {
     const response = await axios.post(`${BASE_API}/auth/verify-jwt`, { jwt });
     if (response) {
+      console.log("response", response);
       const jwtExpirationMs = response.data.data.exp * 1000;
       return jwtExpirationMs > Date.now();
     } else {
       return false;
     }
   } catch (error) {
-    console.log(error);
+    console.log("catch block" + error);
     throw error;
   }
 };
@@ -69,6 +71,3 @@ const authService = {
 };
 
 export default authService;
-function jwt_decode(jwt: any): DecodedJwt {
-  throw new Error("Function not implemented.");
-}
