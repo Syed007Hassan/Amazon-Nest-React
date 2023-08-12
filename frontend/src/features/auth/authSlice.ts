@@ -9,7 +9,7 @@ import authService from "./services/auth.service";
 import { RootState } from "../../store";
 import { LoginUser } from "./models/LoginUser.interface";
 
-const storedUser: any | null = localStorage.getItem("user");
+const storedUser: string | null = localStorage.getItem("user");
 
 const user: DisplayUser | null = storedUser ? JSON.parse(storedUser) : null;
 
@@ -71,7 +71,7 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 
 export const verifyJwt = createAsyncThunk(
   "auth/verifyJwt",
-  async (jwt: string, thunkAPI) => {
+  async (jwt: any, thunkAPI) => {
     try {
       return await authService.verifyJwt(jwt);
     } catch (error) {
@@ -137,7 +137,7 @@ export const authSlice = createSlice({
       .addCase(verifyJwt.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.isAuthenticated = action.payload;
+        state.isAuthenticated = true;
       })
       .addCase(verifyJwt.rejected, (state, action) => {
         state.isLoading = false;

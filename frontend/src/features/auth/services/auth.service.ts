@@ -50,11 +50,11 @@ const logout = async (): Promise<void> => {
   }
 };
 
-const verifyJwt = async (jwt: string): Promise<boolean> => {
+const verifyJwt = async (jwt: any): Promise<boolean> => {
   try {
     const response = await axios.post(`${BASE_API}/auth/verify-jwt`, { jwt });
     if (response) {
-      console.log("response", response);
+      console.log("verifyjwt", response);
       const jwtExpirationMs = response.data.data.exp * 1000;
       return jwtExpirationMs > Date.now();
     } else {

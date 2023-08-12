@@ -14,8 +14,6 @@ export const HomePage = () => {
 
   const { user } = useAppSelector((state) => state.auth);
 
-  console.log(user + "user");
-
   const navigate = useNavigate();
 
   const logoutHandler = () => {
