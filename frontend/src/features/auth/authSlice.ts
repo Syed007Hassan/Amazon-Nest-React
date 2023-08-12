@@ -9,7 +9,7 @@ import authService from "./services/auth.service";
 import { RootState } from "../../store";
 import { LoginUser } from "./models/LoginUser.interface";
 
-const storedUser: string | null = localStorage.getItem("user");
+const storedUser: any | null = localStorage.getItem("user");
 
 const user: DisplayUser | null = storedUser ? JSON.parse(storedUser) : null;
 

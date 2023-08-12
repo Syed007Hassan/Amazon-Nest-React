@@ -28,7 +28,7 @@ const login = async (loginUser: LoginUser): Promise<Jwt> => {
 
       const decodedJwt: DecodedJwt = jwt_decode(response.data.data.jwt);
 
-      localStorage.setItem("user", JSON.stringify(decodedJwt.user));
+      localStorage.setItem("user", JSON.stringify(decodedJwt));
     }
   } catch (error) {
     console.log(error);
@@ -41,6 +41,9 @@ const logout = async (): Promise<void> => {
   try {
     localStorage.removeItem("jwt");
     localStorage.removeItem("user");
+    localStorage.removeItem("Email");
+    localStorage.removeItem("firstName");
+    localStorage.removeItem("lastName");
   } catch (error) {
     console.log(error);
     throw error;

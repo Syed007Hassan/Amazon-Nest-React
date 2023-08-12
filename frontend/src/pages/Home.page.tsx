@@ -14,13 +14,7 @@ export const HomePage = () => {
 
   const { user } = useAppSelector((state) => state.auth);
 
-  class myName {
-    name = user?.name;
-    email = "HASASNASNAS";
-    id = "12213";
-  }
-
-  const user1 = new myName();
+  console.log(user + "user");
 
   const navigate = useNavigate();
 
