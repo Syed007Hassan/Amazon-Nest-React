@@ -10,7 +10,9 @@ import { StripeModule } from './stripe/stripe.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     MongooseModule.forRoot(process.env.MONGODB_URI),
     ProductModule,
     AuthModule,

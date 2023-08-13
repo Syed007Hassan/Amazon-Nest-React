@@ -4,6 +4,6 @@ import { StripeController } from './stripe.controller';
 
 @Module({
   controllers: [StripeController],
-  providers: [StripeService]
+  providers: [StripeService],
 })
 export class StripeModule {}
