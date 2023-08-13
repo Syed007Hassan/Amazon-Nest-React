@@ -17,16 +17,22 @@ export class StripeService {
   }
 
   checkout(cart: Cart) {
+    console.log(JSON.stringify(this.stripe) + 'this.stripe');
+
     const totalPrice = cart.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0,
     );
 
-    return this.stripe.paymentIntents.create({
+    const res = this.stripe.paymentIntents.create({
       amount: totalPrice * 100, // cents
       currency: 'usd', // set currency
       payment_method_types: ['card'], // set payment method
     });
+
+    console.log(res + 'res');
+
+    return res;
   }
 
   create(createStripeDto: CreateStripeDto) {

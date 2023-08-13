@@ -11,15 +11,30 @@ import {
 import { StripeService } from './stripe.service';
 import { CreateStripeDto } from './dto/create-stripe.dto';
 import { UpdateStripeDto } from './dto/update-stripe.dto';
+import { Cart } from './entities/card.model';
+import { ApiTags } from '@nestjs/swagger';
+import { error } from 'console';
 
 @Controller('stripe')
+@ApiTags('stripe')
 export class StripeController {
   constructor(private readonly stripeService: StripeService) {}
 
-  @Post()
-  create(@Body() createStripeDto: CreateStripeDto) {
-    return this.stripeService.create(createStripeDto);
+  @Post('checkout')
+  checkout(@Body() body: { cart: Cart }) {
+    try {
+      const res = this.stripeService.checkout(body.cart);
+      console.log(res + 'res');
+      return res;
+    } catch (e) {
+      return error;
+    }
   }
+
+  // @Post()
+  // create(@Body() createStripeDto: CreateStripeDto) {
+  //   return this.stripeService.create(createStripeDto);
+  // }
 
   @Get()
   findAll() {
